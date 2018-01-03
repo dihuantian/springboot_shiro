@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot_shiro.dao.RoleDao">
+  <resultMap id="BaseResultMap" type="com.example.springboot_shiro.domain.Role">
+    <id column="roleId" jdbcType="VARCHAR" property="roleId" />
+    <result column="roleName" jdbcType="VARCHAR" property="roleName" />
+    <result column="roleDescription" jdbcType="VARCHAR" property="roleDescription" />
+    <result column="createPeople" jdbcType="VARCHAR" property="createPeople" />
+    <result column="createTime" jdbcType="DATE" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    roleId, roleName, roleDescription, createPeople, createTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where roleId = #{roleId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from role
+    where roleId = #{roleId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot_shiro.domain.Role">
+    insert into role (roleId, roleName, roleDescription, 
+      createPeople, createTime)
+    values (#{roleId,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, #{roleDescription,jdbcType=VARCHAR}, 
+      #{createPeople,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot_shiro.domain.Role">
+    insert into role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        roleId,
+      </if>
+      <if test="roleName != null">
+        roleName,
+      </if>
+      <if test="roleDescription != null">
+        roleDescription,
+      </if>
+      <if test="createPeople != null">
+        createPeople,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null">
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleDescription != null">
+        #{roleDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="createPeople != null">
+        #{createPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot_shiro.domain.Role">
+    update role
+    <set>
+      <if test="roleName != null">
+        roleName = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleDescription != null">
+        roleDescription = #{roleDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="createPeople != null">
+        createPeople = #{createPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        createTime = #{createTime,jdbcType=DATE},
+      </if>
+    </set>
+    where roleId = #{roleId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot_shiro.domain.Role">
+    update role
+    set roleName = #{roleName,jdbcType=VARCHAR},
+      roleDescription = #{roleDescription,jdbcType=VARCHAR},
+      createPeople = #{createPeople,jdbcType=VARCHAR},
+      createTime = #{createTime,jdbcType=DATE}
+    where roleId = #{roleId,jdbcType=VARCHAR}
+  </update>
+</mapper>

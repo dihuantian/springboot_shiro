@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Register Pages</title>
+    <link href="/css/login.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/style.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+</head>
+<body class="login" mycollectionplug="bind">
+<div class="login_m">
+    <div class="login_logo">
+        <span>Admin Register</span>
+    </div>
+    <div class="login_boder">
+        <form method="post">
+            <div class="login_padding" id="login_model">
+                <h2>USERNAME</h2>
+                <label>
+                    <input type="text"   id="username" name="username" class="txt_input txt_input2"
+                           placeholder="请输入用户名" />
+                </label>
+                <h2>PASSWORD</h2>
+                <label>
+                    <input type="password"  name="password" id="password" class="txt_input" placeholder="请输入密码" />
+                </label>
+                <h2>REPETITIONPASSWORD</h2>
+                <label>
+                    <input type="password"  name="password" id="repetitionPassword" class="txt_input" placeholder="请再次输入密码" />
+                </label>
+                <h2>EMAIL</h2>
+                <label>
+                    <input type="text"  name="email" id="email" class="txt_input" placeholder="请次输入邮箱" />
+                </label>
+                <p class="forgot"><a id="iforget" href="#">Forgot your password?</a></p>
+                <div class="rem_sub">
+                    <label>
+                        <div class="rem_sub_l">
+                            <input type="button" class="sub_button" name="button" id="register-button" value="Sign In" />
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+        </form>
+        <div id="forget_model" class="login_padding" style="display:none">
+            <br />
+
+            <h1>Forgot password</h1>
+            <br />
+            <div class="forget_model_h2">(Please enter your registered email below and the system will automatically
+                reset users’ password and send it to user’s registered email address.)
+            </div>
+            <label>
+                <input type="text" id="usrmail" class="txt_input txt_input2" />
+            </label>
+
+
+            <div class="rem_sub">
+                <input type="submit" class="forget_button" name="button" id="Retrievenow" value="Retrieve Now"
+                       style="float:left" />
+                <input type="submit" class="forget_button" name="button" id="denglou" value="Return" />　　
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/register.js"></script>
+
+</body>
+</html>

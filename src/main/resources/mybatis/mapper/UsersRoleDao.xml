@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot_shiro.dao.UsersRoleDao">
+  <resultMap id="BaseResultMap" type="com.example.springboot_shiro.domain.UsersRole">
+    <id column="userRoleId" jdbcType="VARCHAR" property="userRoleId" />
+    <result column="user_id" jdbcType="VARCHAR" property="user_id" />
+    <result column="role_id" jdbcType="VARCHAR" property="role_id" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    userRoleId, user_id, role_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from users_role
+    where userRoleId = #{userRoleId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from users_role
+    where userRoleId = #{userRoleId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot_shiro.domain.UsersRole">
+    insert into users_role (userRoleId, user_id, role_id
+      )
+    values (#{userRoleId,jdbcType=VARCHAR}, #{user_id,jdbcType=VARCHAR}, #{role_id,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot_shiro.domain.UsersRole">
+    insert into users_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userRoleId != null">
+        userRoleId,
+      </if>
+      <if test="user_id != null">
+        user_id,
+      </if>
+      <if test="role_id != null">
+        role_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userRoleId != null">
+        #{userRoleId,jdbcType=VARCHAR},
+      </if>
+      <if test="user_id != null">
+        #{user_id,jdbcType=VARCHAR},
+      </if>
+      <if test="role_id != null">
+        #{role_id,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot_shiro.domain.UsersRole">
+    update users_role
+    <set>
+      <if test="user_id != null">
+        user_id = #{user_id,jdbcType=VARCHAR},
+      </if>
+      <if test="role_id != null">
+        role_id = #{role_id,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where userRoleId = #{userRoleId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot_shiro.domain.UsersRole">
+    update users_role
+    set user_id = #{user_id,jdbcType=VARCHAR},
+      role_id = #{role_id,jdbcType=VARCHAR}
+    where userRoleId = #{userRoleId,jdbcType=VARCHAR}
+  </update>
+</mapper>

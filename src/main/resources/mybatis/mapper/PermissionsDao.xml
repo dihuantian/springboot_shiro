@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot_shiro.dao.PermissionsDao">
+  <resultMap id="BaseResultMap" type="com.example.springboot_shiro.domain.Permissions">
+    <id column="permissionsId" jdbcType="VARCHAR" property="permissionsId" />
+    <result column="permissionsName" jdbcType="VARCHAR" property="permissionsName" />
+    <result column="permissions" jdbcType="VARCHAR" property="permissions" />
+    <result column="permissionsDescription" jdbcType="VARCHAR" property="permissionsDescription" />
+    <result column="createPeople" jdbcType="VARCHAR" property="createPeople" />
+    <result column="createTime" jdbcType="DATE" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    permissionsId, permissionsName, permissions, permissionsDescription, createPeople, 
+    createTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from permissions
+    where permissionsId = #{permissionsId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from permissions
+    where permissionsId = #{permissionsId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot_shiro.domain.Permissions">
+    insert into permissions (permissionsId, permissionsName, permissions, 
+      permissionsDescription, createPeople, createTime
+      )
+    values (#{permissionsId,jdbcType=VARCHAR}, #{permissionsName,jdbcType=VARCHAR}, #{permissions,jdbcType=VARCHAR}, 
+      #{permissionsDescription,jdbcType=VARCHAR}, #{createPeople,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}
+      )
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot_shiro.domain.Permissions">
+    update permissions
+    <set>
+      <if test="permissionsName != null">
+        permissionsName = #{permissionsName,jdbcType=VARCHAR},
+      </if>
+      <if test="permissions != null">
+        permissions = #{permissions,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionsDescription != null">
+        permissionsDescription = #{permissionsDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="createPeople != null">
+        createPeople = #{createPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        createTime = #{createTime,jdbcType=DATE},
+      </if>
+    </set>
+    where permissionsId = #{permissionsId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot_shiro.domain.Permissions">
+    update permissions
+    set permissionsName = #{permissionsName,jdbcType=VARCHAR},
+      permissions = #{permissions,jdbcType=VARCHAR},
+      permissionsDescription = #{permissionsDescription,jdbcType=VARCHAR},
+      createPeople = #{createPeople,jdbcType=VARCHAR},
+      createTime = #{createTime,jdbcType=DATE}
+    where permissionsId = #{permissionsId,jdbcType=VARCHAR}
+  </update>
+  <insert id="insertSelective" parameterType="com.example.springboot_shiro.domain.Permissions">
+    insert into permissions
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="permissionsId != null">
+        permissionsId,
+      </if>
+      <if test="permissionsName != null">
+        permissionsName,
+      </if>
+      <if test="permissions != null">
+        permissions,
+      </if>
+      <if test="permissionsDescription != null">
+        permissionsDescription,
+      </if>
+      <if test="createPeople != null">
+        createPeople,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="permissionsId != null">
+        #{permissionsId,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionsName != null">
+        #{permissionsName,jdbcType=VARCHAR},
+      </if>
+      <if test="permissions != null">
+        #{permissions,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionsDescription != null">
+        #{permissionsDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="createPeople != null">
+        #{createPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+</mapper>
