@@ -1,18 +1,21 @@
 package com.example.springboot_shiro.config.shiro;
 
+import com.example.springboot_shiro.domain.Users;
 import com.example.springboot_shiro.enums.ShiroTimeoutEnum;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
+import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
-import java.sql.Time;
-import java.util.Collection;
-import java.util.Set;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /*
@@ -34,8 +37,10 @@ public class ShiroSessionDao extends EnterpriseCacheSessionDAO {
 
     private static final String KEY_PREFIX = "shiro_redis_session:";
 
+    private final Logger log = LoggerFactory.getLogger(ShiroSessionDao.class);
+
     @Autowired(required = true)
-    public RedisTemplate<String,Object> redisTemplate;
+    public RedisTemplate<String, Object> redisTemplate;
 
     public ShiroSessionDao() {
         super();
@@ -43,48 +48,44 @@ public class ShiroSessionDao extends EnterpriseCacheSessionDAO {
 
     @Override
     protected Serializable doCreate(Session session) {
-
         Serializable sessionId = super.doCreate(session);
         ValueOperations<String, Object> operations = this.redisTemplate.opsForValue();
         operations.set((KEY_PREFIX + session.getId()).toString(), session, redisExpireTime, TimeUnit.SECONDS);
         this.assignSessionId(session, sessionId);
-        System.out.println("创建：" + session.getId() + ",剩余时间：" + session.getTimeout());
+        log.info("访问主机:" + session.getHost() + "  SessionId:" + session.getId() + "  到期时间:" + session.getTimeout() + "  创建新Session");
         return sessionId;
     }
 
     @Override
     protected Session doReadSession(Serializable sessionId) {
-
         Session session = super.doReadSession(sessionId);
         if (session == null) {
             String key = KEY_PREFIX + sessionId;
             session = (Session) redisTemplate.opsForValue().get(KEY_PREFIX + sessionId);
-            System.out.println("Redis读取：" + sessionId);
+            log.info("访问主机:" + session.getHost() + "  SessionId:" + session.getId() + "  到期时间:" + session.getTimeout() + "  访问Redis Session");
         } else {
-            System.out.println("Cache读取：" + sessionId + ",剩余时间：" + session.getTimeout());
+            log.info("访问主机:" + session.getHost() + "  SessionId:" + session.getId() + "  到期时间:" + session.getTimeout() + "  访问Cache Session");
         }
         return session;
     }
 
     @Override
     protected void doUpdate(Session session) throws UnknownSessionException {
-
         if (session == null || session.getId() == null) {
             return;
         }
-        System.out.println("更新：" + session.getId() + ",剩余时间：" + session.getTimeout());
+        log.info("访问主机:" + session.getHost() + "  SessionId:" + session.getId() + "  到期时间:" + session.getTimeout() + "  更新Session");
         session.setTimeout(shiroExpireTime);
         redisTemplate.opsForValue().set(KEY_PREFIX + session.getId(), session, redisExpireTime, TimeUnit.SECONDS);
     }
 
     @Override
     protected void doDelete(Session session) {
-
         if (session == null || session.getId() == null) {
             return;
         }
+        log.info("访问主机:" + session.getHost() + "  SessionId:" + session.getId() + "  到期时间:" + session.getTimeout() + "  删除Cache和Redis Session");
         redisTemplate.opsForValue().getOperations().delete(KEY_PREFIX + session.getId());
-        System.out.println("删除：" + session.getId() + ",剩余时间：" + session.getTimeout());
     }
 
 }

@@ -31,6 +31,7 @@ public class ShiroConfig {
     @Autowired
     private ShiroSessionDao shiroSessionDao;
 
+    /*Shiro过滤器设置*/
     @Bean
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
 
@@ -63,6 +64,7 @@ public class ShiroConfig {
         return shiroFilterFactoryBean;
     }
 
+    /*安全管理器设置*/
     @Bean
     public SecurityManager securityManager() {
 
@@ -73,6 +75,7 @@ public class ShiroConfig {
         return defaultSecurityManager;
     }
 
+    /*Session管理*/
     @Bean
     public SessionManager sessionManager() {
 
@@ -103,6 +106,7 @@ public class ShiroConfig {
         return cookieRememberMeManager;
     }
 
+    /*Shiro的AOP支持*/
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
 
@@ -111,6 +115,7 @@ public class ShiroConfig {
         return authorizationAttributeSourceAdvisor;
     }
 
+    /*Shiro数据访问层设置，认证和授权*/
     @Bean
     public CustomShiroRealm shiroRealm() {
 
@@ -119,6 +124,7 @@ public class ShiroConfig {
         return realm;
     }
 
+    /*密码匹配器*/
     @Bean
     public HashedCredentialsMatcher hashedCredentialsMatcher() {
 
